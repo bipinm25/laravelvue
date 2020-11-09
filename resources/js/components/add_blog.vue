@@ -6,14 +6,16 @@
                     <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Blog Title</label>
-                        <input type="text" v-model="form.title" class="form-control" id="exampleInputEmail1" placeholder="Enter Title">
+                        <input type="text" v-model="form.title" class="form-control" :class="{'is-invalid':errors.title}" id="exampleInputEmail1" placeholder="Enter Title">
+                        <span v-if="errors" class="error-msg" >{{errors.title}}</span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Category</label>
-                       <select v-model="form.category_id" class="form-control">
+                       <select v-model="form.category_id" class="form-control" :class="{'is-invalid':errors.category_id}">
                            <option value="0">--SELETCT--</option>                           
                            <option v-for="(cat,i) in categorylist" :key="i" :value="cat.id">{{cat.category}}</option>
                        </select>
+                        <span  v-if="errors" class="error-msg">{{errors.category_id}}</span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Content</label>
@@ -97,7 +99,8 @@ import Multiselect from 'vue-multiselect'
                 },
                 categorylist:'',
                 imgsrc:'',
-                text:'Add Blog'
+                text:'Add Blog',
+                errors:"{}"
             }
         },
         created(){
@@ -130,7 +133,12 @@ import Multiselect from 'vue-multiselect'
                          this.$router.push({ name: 'blog_list' });
                     }
                 }).catch(err =>{
-                    console.log(err.response.data.errors);
+                    //let error = err.response.data.errors;                    
+                    var allerror={};
+                     $.each( err.response.data.errors, function(key, value) {
+                        allerror[key] = value[0];
+                    });    
+                   this.errors = allerror;
                 })
             },
             handleFileUpload(){

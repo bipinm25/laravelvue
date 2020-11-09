@@ -42123,3 +42123,10 @@ a.text-dark:focus {
   background-color: #84a29d !important;
 }
 
+.error-msg {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 100%;
+  color: #dc3545;
+}
+

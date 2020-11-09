@@ -5,6 +5,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
+use App\Http\Middleware\LoginCheck;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,31 +23,45 @@ use App\Http\Controllers\DashboardController;
 //     return view('welcome');
 // });
 
-Route::get('/',[DashboardController::class, 'index']);
+Route::get('/',[LoginController::class, 'index']);
+
+Route::post('/login',[LoginController::class, 'login'])->name('login');
+Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 
 
-Route::get('/getsession',[DashboardController::class, 'getSession']);
+Route::post('/createuser',[LoginController::class, 'createuser'])->name('createuser');
 
-Route::post('/savecategory',[CategoryController::class, 'saveCategory']);
 
-Route::get('/getcategory',[CategoryController::class, 'getCategory']);
 
-Route::post('/deletecategory',[CategoryController::class, 'deleteCategory']);
+//Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
-Route::post('/savetag',[TagController::class, 'saveTag']);
+Route::middleware([LoginCheck::class])->group(function(){        
+       
+        Route::get('/getsession',[DashboardController::class, 'getSession']);
 
-Route::get('/gettag',[TagController::class, 'getTag']);
+        Route::post('/savecategory',[CategoryController::class, 'saveCategory']);
 
-Route::post('/deletetag',[TagController::class, 'deleteTag']);
+        Route::get('/getcategory',[CategoryController::class, 'getCategory']);
 
-Route::get('/listblog',[BlogController::class, 'listBlog']);
+        Route::post('/deletecategory',[CategoryController::class, 'deleteCategory']);
 
-Route::get('/getblog/{id}',[BlogController::class, 'getBlog']);
+        Route::post('/savetag',[TagController::class, 'saveTag']);
 
-Route::post('/saveblog',[BlogController::class, 'saveBlog']);
+        Route::get('/gettag',[TagController::class, 'getTag']);
 
-Route::post('/deleteblog',[BlogController::class, 'deleteBlog']);
+        Route::post('/deletetag',[TagController::class, 'deleteTag']);
 
+        Route::get('/listblog',[BlogController::class, 'listBlog']);
+
+        Route::get('/getblog/{id}',[BlogController::class, 'getBlog']);
+
+        Route::post('/saveblog',[BlogController::class, 'saveBlog']);
+
+        Route::post('/deleteblog',[BlogController::class, 'deleteBlog']);
+
+        Route::any('{slug}',[DashboardController::class, 'index'])->where('slug', '(.*)?');
+
+});
 
 
 
@@ -80,6 +97,6 @@ Route::get('/admin', function () {
     return view('admin',['tasks'=>$data['tasks']]);
 });
 
-Route::any('{slug}', function (){
-        return view('admin');
-    })->where('slug', '(.*)?');
+// Route::any('{slug}', function (){
+//         return view('admin');
+//     })->where('slug', '(.*)?');

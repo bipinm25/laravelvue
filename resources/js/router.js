@@ -12,13 +12,12 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path:'/', 
-        component:dashboard,
-        name:'dashboard',
-        beforeEnter: (to, from, next) => {
-            store.dispatch('loadSession');     
-          }
-    },
+        path:'/dashboard', 
+        component:dashboard,        
+        // beforeEnter: (to, from, next) => {           
+        //     store.dispatch('loadSession');     
+        // }
+    },    
     {
         path:'/category', 
         component:category,        

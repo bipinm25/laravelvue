@@ -47,7 +47,7 @@ import { mapGetters } from "vuex";
         },
         methods:{
             listBlog(n = 0){                         
-                axios.get('/listblog',{
+                axios.get('listblog',{
                         params: {
                             page: n
                         }

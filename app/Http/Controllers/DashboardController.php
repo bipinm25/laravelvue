@@ -10,10 +10,10 @@ class DashboardController extends Controller
 {
     public function index(Request $request){
 
-        $settings = DB::table('common_settings')->get();
+        // $settings = DB::table('common_settings')->get();
        
-        $settings = $settings[0];
-        $request->session()->put('limit', $settings->table_limit);        
+        // $settings = $settings[0];
+        // $request->session()->put('limit', $settings->table_limit);        
         return view('admin');
     }
 

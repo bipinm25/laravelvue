@@ -3330,6 +3330,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3350,7 +3352,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       categorylist: '',
       imgsrc: '',
-      text: 'Add Blog'
+      text: 'Add Blog',
+      errors: "{}"
     };
   },
   created: function created() {
@@ -3384,7 +3387,12 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       })["catch"](function (err) {
-        console.log(err.response.data.errors);
+        //let error = err.response.data.errors;                    
+        var allerror = {};
+        $.each(err.response.data.errors, function (key, value) {
+          allerror[key] = value[0];
+        });
+        _this.errors = allerror;
       });
     },
     handleFileUpload: function handleFileUpload() {
@@ -3719,7 +3727,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      axios.get('/listblog', {
+      axios.get('listblog', {
         params: {
           page: n
         }
@@ -86227,6 +86235,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.title },
                   attrs: {
                     type: "text",
                     id: "exampleInputEmail1",
@@ -86241,7 +86250,13 @@ var render = function() {
                       _vm.$set(_vm.form, "title", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors
+                  ? _c("span", { staticClass: "error-msg" }, [
+                      _vm._v(_vm._s(_vm.errors.title))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -86261,6 +86276,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
+                    class: { "is-invalid": _vm.errors.category_id },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -86295,7 +86311,13 @@ var render = function() {
                     })
                   ],
                   2
-                )
+                ),
+                _vm._v(" "),
+                _vm.errors
+                  ? _c("span", { staticClass: "error-msg" }, [
+                      _vm._v(_vm._s(_vm.errors.category_id))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c(
@@ -86994,7 +87016,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [_vm._v("        \n    dashboard test\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -106135,12 +106157,11 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
-  path: '/',
-  component: _components_dashboard_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-  name: 'dashboard',
-  beforeEnter: function beforeEnter(to, from, next) {
-    _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('loadSession');
-  }
+  path: '/dashboard',
+  component: _components_dashboard_vue__WEBPACK_IMPORTED_MODULE_3__["default"] // beforeEnter: (to, from, next) => {           
+  //     store.dispatch('loadSession');     
+  // }
+
 }, {
   path: '/category',
   component: _components_blog_category_vue__WEBPACK_IMPORTED_MODULE_4__["default"]

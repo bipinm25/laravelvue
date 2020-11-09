@@ -66,7 +66,7 @@
    </div>
 <!-- ./wrapper -->
 
-<<script src="{{ asset ("js/app.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("js/app.js") }}" type="text/javascript"></script>
 <!--
 <script src="{{asset("admin_LTE/plugins/jquery/jquery.min.js")}}"></script>
 

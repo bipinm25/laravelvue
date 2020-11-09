@@ -6,6 +6,7 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
@@ -86,8 +87,9 @@ class BlogController extends Controller
     }
 
     public function listBlog(Request $request){
-        $limit = $request->session()->get('limit');
-        $count = Blog::with('category')->count();        
+        $limit = $request->session()->get('limit');        
+        
+        $count = Blog::with('category')->count();       
         $blog = Blog::with('category')->orderByDesc('id')->offset($request->page)
         ->limit($limit)->get();
         return json_encode(['count' => $count,'data' => $blog->toArray()]);
@@ -96,10 +98,21 @@ class BlogController extends Controller
 
     public function saveBlog(Request $request){
 
-        $request->validate([
+        // $request->validate([
+        //     'title' => 'required|max:255',
+        //     'category_id' => 'required|numeric|gt:0',
+        // ]);
+
+        $messages = [
+            'title.required' => 'Blog title is required',   
+            'title.max' => 'maximum length 255', 
+            'category_id.gt' => 'Please Select Category',        
+        ];
+        
+        Validator::make($request->all(), [
             'title' => 'required|max:255',
             'category_id' => 'required|numeric|gt:0',
-        ]);
+        ], $messages)->validate();
 
         $blog = new Blog();
         if($request->id > 0){

@@ -16,10 +16,10 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+          <router-link to="/dashboard" class="nav-link">      
               <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>Dashboard</p>
-            </a>           
+              <p> Dashboard</p>
+          </router-link>                      
           </li>
           <li class="nav-item">     
           <router-link to="/blog_list" class="nav-link">      
@@ -38,6 +38,9 @@
               <i class="nav-icon fas fa-th"></i>
               <p> Tag</p>
           </router-link>
+          </li>
+          <li class="nav-item">              
+          <a href="{{route('logout')}}" class="nav-link"><i class="nav-icon fas fa-th"></i> <p> Logout</p></a>     
           </li>                
         </ul>
       </nav>
