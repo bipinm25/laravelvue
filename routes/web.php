@@ -6,6 +6,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\LoginCheck;
 
 /*
@@ -58,6 +59,15 @@ Route::middleware([LoginCheck::class])->group(function(){
         Route::post('/saveblog',[BlogController::class, 'saveBlog']);
 
         Route::post('/deleteblog',[BlogController::class, 'deleteBlog']);
+
+        Route::post('/saveteacher',[TeacherController::class, 'saveTeacher']);
+
+        Route::get('/listteacher',[TeacherController::class, 'listTeachers']);
+
+        Route::get('/getteacher',[TeacherController::class, 'getTeacher']);
+
+        Route::post('/deleteteacher',[TeacherController::class, 'deleteTeacher']);
+
 
         Route::any('{slug}',[DashboardController::class, 'index'])->where('slug', '(.*)?');
 

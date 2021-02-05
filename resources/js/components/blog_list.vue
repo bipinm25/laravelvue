@@ -1,5 +1,6 @@
 <template>
     <div>
+         
         <basicHtml>
             <h3 slot="header" class="card-title">Blog List</h3>            
             <router-link slot="button" to="/add_blog" class="btn btn-primary">Add Blog</router-link>
@@ -27,7 +28,24 @@
                   <pagination :total="total"  v-on:changePage="listBlog($event)"></pagination>
               </div>  
         </basicHtml>
-         <deleteModal></deleteModal>        
+         <deleteModal></deleteModal>
+         <Modal
+            :value="false"
+            :mask-closable="false"
+            :closable="false"
+         width="360">
+            <p slot="header" style="text-align:center">
+                <Icon type="ios-information-circle"></Icon>
+                <span>Add </span>
+            </p>
+            <div style="text-align:center">
+              aaaaaaaaaaa
+            </div>
+            <div slot="footer">
+                <Button type="default" size="large" >Close</Button>
+                <Button type="error" size="large" >Save</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -41,7 +59,8 @@ import { mapGetters } from "vuex";
     export default {
         data(){
             return{
-                allblog:'',             
+                allblog:'',
+                title:'test',             
                 total:0
             }
         },

@@ -21,6 +21,18 @@
               <p> Dashboard</p>
           </router-link>                      
           </li>
+          <li class="nav-item">
+          <router-link to="/teacher" class="nav-link">      
+              <i class="nav-icon fas fa-th"></i>
+              <p> Teacher</p>
+          </router-link>                      
+          </li>
+          <li class="nav-item">
+          <router-link to="/classes" class="nav-link">      
+              <i class="nav-icon fas fa-th"></i>
+              <p> Class</p>
+          </router-link>                      
+          </li>
           <li class="nav-item">     
           <router-link to="/blog_list" class="nav-link">      
               <i class="nav-icon fas fa-th"></i>

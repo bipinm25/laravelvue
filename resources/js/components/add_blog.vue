@@ -162,7 +162,7 @@ import Multiselect from 'vue-multiselect'
             getBlog(id){
                 axios.get('/getblog/'+id).then((res)=>{
                     let data = res.data;
-                    console.log(data);
+                    //console.log(data);
 
                    this.form.id = data.id;           
                    this.form.title = data.title;
