@@ -9,6 +9,7 @@ import blog_list from './components/blog_list.vue'
 import add_blog from './components/add_blog.vue'
 import classes from './components/classes.vue';
 import teacher from './components/teacher.vue';
+import parents from './components/parents.vue';
 
 
 Vue.use(VueRouter)
@@ -24,6 +25,10 @@ const routes = [
     {
         path:'/classes', 
         component:classes,        
+    }, 
+    {
+        path:'/parents', 
+        component:parents,        
     }, 
     {
         path:'/teacher', 

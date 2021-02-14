@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ClassMasterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ParentMasterController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\LoginCheck;
 
@@ -67,6 +69,22 @@ Route::middleware([LoginCheck::class])->group(function(){
         Route::get('/getteacher',[TeacherController::class, 'getTeacher']);
 
         Route::post('/deleteteacher',[TeacherController::class, 'deleteTeacher']);
+
+        Route::post('/saveclass',[ClassMasterController::class, 'saveClassMaster']);
+
+        Route::get('/listclass',[ClassMasterController::class, 'listClassMaster']);
+
+        Route::get('/getclass',[ClassMasterController::class, 'getClassMaster']);
+
+        Route::post('/deleteclass',[ClassMasterController::class, 'deleteClassMaster']);
+
+        Route::post('/saveparent',[ParentMasterController::class, 'saveParent']);
+
+        Route::get('/listparent',[ParentMasterController::class, 'listParent']);
+
+        Route::get('/getparent',[ParentMasterController::class, 'getParent']);
+
+        Route::post('/deleteparent',[ParentMasterController::class, 'deleteParent']);
 
 
         Route::any('{slug}',[DashboardController::class, 'index'])->where('slug', '(.*)?');

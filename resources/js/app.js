@@ -39,7 +39,7 @@ Vue.use(Toast, options);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('newheader', require('./components/header.vue').default);
 Vue.component('pagination', require('./components/pagination.vue').default);
 
 /**

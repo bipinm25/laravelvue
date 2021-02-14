@@ -86,8 +86,11 @@ class TeacherController extends Controller
 
     public function listTeachers(Request $request){
 
-        $limit = 5;
+        if(isset($request->getall)){
+            return Teacher::orderBy('first_name')->get();
+        }
 
+        $limit = 5;
         $count = Teacher::count();
         $teacher = Teacher::orderByDesc('id')->offset($request->page)
         ->limit($limit)->get();
@@ -96,8 +99,15 @@ class TeacherController extends Controller
     }
 
     public function getTeacher(Request $request){
-        $teacher = Teacher::where('id',$request->id)->first();       
-        return $teacher;
+        $teacher = Teacher::where('id',$request->id)->first(); 
+        $teacher = collect($teacher);
+        $modified = $teacher->map(function($item, $key) {
+            if($key == 'doj'){
+                return date('Y-m-d',strtotime($item));
+            }
+            return $item;
+         });      
+        return $modified;
     }
 
     public function deleteTeacher(Request $request){
@@ -107,10 +117,12 @@ class TeacherController extends Controller
     public function saveTeacher(Request $request){
         $messages = [
             'first_name.required' => 'First Name is required',                
+            'gender.required' => 'gender is required',                
         ];
         
         Validator::make($request->all(), [
-            'first_name' => 'required|max:255',            
+            'first_name' => 'required|max:255',          
+            'gender' => 'required',   
         ], $messages)->validate();
 
         $teacher = new Teacher();

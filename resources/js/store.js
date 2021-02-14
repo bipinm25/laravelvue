@@ -15,6 +15,7 @@ const store = new Vuex.Store({
             isDeleted : false,
 
         },
+        mainheader:'Dashboard',
         user: false,
         userPermission: null,
         addModalObj:{
@@ -29,8 +30,10 @@ const store = new Vuex.Store({
         allsession:null,
     },
     getters: {
+        getheader(state){
+            return state.mainheader
+        },
         getCounter(state){
-
            return state.conuter
         },
         getDeleteModalObj(state){
@@ -58,6 +61,9 @@ const store = new Vuex.Store({
         },
         setDataChanged(state,data){           
             state.dataChanged = data
+        },
+        setHeader(state, data){
+            state.mainheader = data;
         },
         setDeleteModal(state, data){
             const deleteModalObj = {

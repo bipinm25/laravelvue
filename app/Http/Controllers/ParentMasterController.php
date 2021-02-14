@@ -4,82 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\ParentMaster;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ParentMasterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function saveParent(Request $request){
+        $messages = [
+            'first_name.required' => 'First Name is required',                 
+        ];
+        
+        Validator::make($request->all(), [
+            'first_name' => 'required|max:255',
+        ], $messages)->validate();
+
+        $parent = new ParentMaster();
+        if($request->id > 0){
+            $parent = ParentMaster::findOrFail($request->id);
+        }
+        $parent->first_name = $request->first_name;
+        $parent->last_name = $request->last_name;
+        $parent->email = $request->email;
+        $parent->phone = $request->phone;
+        $parent->save();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function listParent(Request $request){
+        $limit = $request->session()->get('limit');        
+        
+        $count = ParentMaster::count();       
+        $parent = ParentMaster::orderByDesc('id')->offset($request->page)
+        ->limit($limit)->get();
+        return json_encode(['count' => $count,'data' => $parent->toArray()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function getParent(Request $request){
+        $parent = new ParentMaster();
+        return ParentMaster::where('id',$request->id)->first();       
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ParentMaster  $parentMaster
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ParentMaster $parentMaster)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ParentMaster  $parentMaster
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ParentMaster $parentMaster)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ParentMaster  $parentMaster
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ParentMaster $parentMaster)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ParentMaster  $parentMaster
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ParentMaster $parentMaster)
-    {
-        //
+    public function deleteParent(Request $request){
+        $parent = ParentMaster::findOrFail($request->id)->delete();
     }
 }
