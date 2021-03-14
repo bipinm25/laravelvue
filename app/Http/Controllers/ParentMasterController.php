@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ParentMasterController extends Controller
 {
-    public function saveParent(Request $request){
-		
+    public function saveParent(Request $request){		
         $messages = [
             'first_name.required' => 'First Name is required',                 
         ];
